@@ -1,27 +1,24 @@
 import financeData from "../data/finance";
 
-const calculateNetWorth = (accounts: Array<{ title: string; amount: number }>, debts: Array<{ title: string; amount: number }>) => {
-const totalAssets = accounts.reduce((sum, account) => sum + account.amount, 0)
-const totalDebts = debts.reduce((sum, debt) => sum + debt.amount, 0)
-return totalAssets - totalDebts
-}
 
-const calculateTotals = (accounts: Array<{ title: string; amount: number }>) => {
-return accounts.reduce((sum, account) => sum + account.amount, 0)
-}
-
-
-const formatCurrency = (amount: number) => {
-return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount)
-}
-
-const getAccountNameById = (accountId: string): string => {
+export const getAccountNameById = (accountId: string): string => {
     const account = financeData.accounts.find((acc) => acc.id === accountId);
     return account ? account.title : 'Unknown Account';
   };
 
 
-const calculateRemainingBalance = (accountId: string): number => {
+
+  /**
+   * Formats a number as currency.
+   */
+  export const formatCurrency = (amount: number): string => {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+  };
+  
+  /**
+   * Calculates the remaining balance for a given account.
+   */
+  export const calculateRemainingBalance = (accountId: string): number => {
     const account = financeData.accounts.find((acc) => acc.id === accountId);
     const accountExpenses = financeData.expenses.filter((expense) => expense.account_id === accountId);
   
@@ -33,6 +30,20 @@ const calculateRemainingBalance = (accountId: string): number => {
     return account.startingAmount - totalExpenses;
   };
   
+  /**
+   * Calculates the total amount for a list of items.
+   */
+  export const calculateTotals = (items: Array<{ amount: number }>): number => {
+    return items.reduce((sum, item) => sum + item.amount, 0);
+  };
   
+  /**
+   * Calculates the net worth.
+   */
+  export const calculateNetWorth = (accounts: Array<{ amount: number }>, debts: Array<{ amount: number }>): number => {
+    const totalAssets = calculateTotals(accounts);
+    const totalDebts = calculateTotals(debts);
+    return totalAssets - totalDebts;
+  };
 
-export {calculateNetWorth, calculateTotals, formatCurrency, getAccountNameById, calculateRemainingBalance}
+  

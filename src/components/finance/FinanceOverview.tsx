@@ -1,29 +1,27 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import financeData from '@/lib/data/finance';
+import financeData, { RemainingBalance } from '@/lib/data/finance';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { calculateRemainingBalance, formatCurrency } from '@/lib/functions/finance';
+import { calculateRemainingBalance, calculateNetWorth, calculateTotals, formatCurrency } from '@/lib/functions/finance';
 import AccountBalancesChart from '@/components/finance/AccountBalancesChart';
 import { cn } from '@/lib/utils';
 
 const FinanceOverview: React.FC = () => {
   const [accounts, setAccounts] = useState(financeData.accounts);
-  const [remainingBalances, setRemainingBalances] = useState<
-    Array<{ id: string; title: string; remainingBalance: number; percentageChange: number }>
-  >([]);
+  const [remainingBalances, setRemainingBalances] = useState<RemainingBalance[]>([]);
 
-  // Compute remaining balances and percentage change whenever accounts or expenses change
+  const { debts } = financeData;
+
+  const netWorth = calculateNetWorth(accounts, debts);
+  const totalAssets = calculateTotals(accounts);
+  const totalDebts = calculateTotals(debts);
+
   useEffect(() => {
     const updatedRemainingBalances = accounts.map((account) => {
       const remainingBalance = calculateRemainingBalance(account.id);
       const percentageChange = ((remainingBalance - account.startingAmount) / account.startingAmount) * 100;
-      return {
-        id: account.id,
-        title: account.title,
-        remainingBalance,
-        percentageChange,
-      };
+      return { id: account.id, title: account.title, remainingBalance, percentageChange };
     });
     setRemainingBalances(updatedRemainingBalances);
   }, [accounts]);

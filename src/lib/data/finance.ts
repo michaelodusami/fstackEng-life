@@ -22,6 +22,14 @@ export interface Tab {
     title: string;
     category: string;
     amount: number;
+    date: string; // New: ISO format date string
+  }
+  
+  export interface RemainingBalance {
+    id: string;
+    title: string;
+    remainingBalance: number;
+    percentageChange: number;
   }
   
   export interface FinanceData {
@@ -51,10 +59,10 @@ export interface Tab {
       { id: "d2", title: "Loan", amount: 200 },
     ],
     expenses: [
-      { id: "e1", account_id: "a1", title: "Grocery Shopping", category: "Groceries", amount: 50 },
-      { id: "e2", account_id: "a2", title: "Electric Bill", category: "Utilities", amount: 30 },
-      { id: "e3", account_id: "a3", title: "Dining Out", category: "Food & Drink", amount: 20 },
-    ],
+        { id: "e1", account_id: "a1", title: "Grocery Shopping", category: "Groceries", amount: 50, date: "2025-01-01" },
+        { id: "e2", account_id: "a2", title: "Electric Bill", category: "Utilities", amount: 30, date: "2025-01-02" },
+        { id: "e3", account_id: "a3", title: "Dining Out", category: "Food & Drink", amount: 20, date: "2025-01-03" },
+      ],
   };
   
   export default financeData;
