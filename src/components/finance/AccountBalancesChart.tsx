@@ -6,7 +6,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 interface RemainingBalance {
   id: string;
   title: string;
-  remainingBalance: number;
+  amount: number;
 }
 
 interface Props {
@@ -22,7 +22,7 @@ const AccountBalancesChart: React.FC<Props> = ({ remainingBalances }) => {
           <XAxis dataKey="title" />
           <YAxis />
           <Tooltip formatter={(value) => `$${value}`} />
-          <Bar dataKey="remainingBalance" fill="#4CAF50" />
+          <Bar dataKey="amount" fill="#4CAF50" />
         </BarChart>
       </ResponsiveContainer>
     </div>

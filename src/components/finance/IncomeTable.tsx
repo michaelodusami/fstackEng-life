@@ -1,20 +1,20 @@
 'use client';
 
 import React from 'react';
-import financeData, { Account, Expense } from '@/lib/data/finance';
+import { Account, Income } from '@/lib/data/finance';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 import { formatCurrency, getAccountNameById } from '@/lib/functions/finance';
 
 interface Props {
-  expenses: Expense[]
+  income: Income[]
   accounts: Account[]
 }
 
-const ExpenseTable: React.FC<Props> = ({accounts, expenses}) => {
+const IncomeTable: React.FC<Props> = ({accounts, income}) => {
 
   return (
     <div className="p-6 bg-card rounded-lg shadow">
-      <h2 className="text-xl font-semibold mb-4">Expense Table</h2>
+      <h2 className="text-xl font-semibold mb-4">Income Table</h2>
       <Table>
         <TableHeader>
           <TableRow>
@@ -26,13 +26,13 @@ const ExpenseTable: React.FC<Props> = ({accounts, expenses}) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {expenses.map((expense) => (
-            <TableRow key={expense.id}>
-              <TableCell>{expense.id}</TableCell>
-              <TableCell>{getAccountNameById(accounts, expense.account_id)}</TableCell>
-              <TableCell>{expense.title}</TableCell>
-              <TableCell>{expense.category}</TableCell>
-              <TableCell className="text-right">{formatCurrency(expense.amount)}</TableCell>
+          {income.map((_) => (
+            <TableRow key={_.id}>
+              <TableCell>{_.id}</TableCell>
+              <TableCell>{getAccountNameById(accounts, _.account_id)}</TableCell>
+              <TableCell>{_.title}</TableCell>
+              <TableCell>{_.category}</TableCell>
+              <TableCell className="text-right">{formatCurrency(_.amount)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -41,4 +41,4 @@ const ExpenseTable: React.FC<Props> = ({accounts, expenses}) => {
   );
 };
 
-export default ExpenseTable;
+export default IncomeTable;

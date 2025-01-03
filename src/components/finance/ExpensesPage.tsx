@@ -4,23 +4,32 @@ import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import ExpenseCharts from '@/components/finance/ExpenseCharts';
 import ExpenseTable from '@/components/finance/ExpenseTable';
-import financeData, { Expense } from '@/lib/data/finance';
+import financeData, { Account, Expense, predefinedCategories } from '@/lib/data/finance';
 
-const predefinedCategories = ['Groceries', 'Utilities', 'Food & Drink', 'Transport', 'Entertainment', 'Healthcare'];
 
-const ExpensePage: React.FC = () => {
+
+
+interface Props {
+  accounts: Account[]
+  expenses: Expense[],
+  setExpenses: any
+}
+
+
+
+const ExpensePage: React.FC<Props> = ({accounts, expenses, setExpenses}) => {
   const [newExpense, setNewExpense] = useState({
     title: '',
     category: predefinedCategories[0],
     amount: 0,
-    account_id: financeData.accounts[0]?.id || '',
+    account_id: accounts[0]?.id || '',
   });
 
   const handleAddExpense = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Create new expense with a unique ID
-    const newId = `e${financeData.expenses.length + 1}`;
+    const newId = `e${expenses.length + 1}`;
     const expense: Expense = {
       id: newId,
       title: newExpense.title,
@@ -31,7 +40,7 @@ const ExpensePage: React.FC = () => {
     };
 
     // Add the expense to the financeData
-    financeData.expenses.push(expense);
+    setExpenses([...expenses, expense])
 
     // Reset form
     setNewExpense({
@@ -56,12 +65,12 @@ const ExpensePage: React.FC = () => {
 
         {/* Charts Tab */}
         <TabsContent value="charts">
-          <ExpenseCharts />
+          <ExpenseCharts accounts={accounts} expenses={expenses} />
         </TabsContent>
 
         {/* Tables Tab */}
         <TabsContent value="tables">
-          <ExpenseTable />
+          <ExpenseTable accounts={accounts} expenses={expenses} />
         </TabsContent>
 
         {/* Add Expense Tab */}
@@ -135,7 +144,7 @@ const ExpensePage: React.FC = () => {
               </div>
               <button
                 type="submit"
-                className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark"
+                className="px-4 py-2 bg-primary  rounded hover:bg-primary-dark"
               >
                 Add Expense
               </button>

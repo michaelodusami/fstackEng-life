@@ -1,4 +1,5 @@
-import React from 'react';
+"use client"
+import React, { useEffect, useMemo, useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import FinanceOverview from '@/components/finance/FinanceOverview';
 import financeData from '@/lib/data/finance';
@@ -6,22 +7,43 @@ import ExpenseTable from '@/components/finance/ExpenseTable';
 import ExpenseCharts from '@/components/finance/ExpenseCharts';
 import ExpensePage from './ExpensesPage';
 import IncomePage from './IncomePage';
+import {tabs} from "@/lib/data/finance"
+import { calculateRemainingBalance, calculatePercentageChange } from '@/lib/functions/finance';
 
 const FinancePage = () => {
+
+  const [accounts, setAccounts] = useState(financeData.accounts);
+  const [expenses, setExpenses] = useState(financeData.expenses)
+  const [income, setIncome] = useState(financeData.income)
+  const [debts, setDebts] = useState(financeData.debts)
+
+  const updatedAccounts = useMemo(() => {
+    return accounts.map((account) => {
+      const currentBalance = calculateRemainingBalance(accounts, expenses, income, account.id);
+      const percentageChange = calculatePercentageChange(account.previousBalance, currentBalance);
+
+      return {
+        ...account,
+        amount: currentBalance,
+        percentageChange,
+      };
+    });
+  }, [accounts, expenses, income]);
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Finance Dashboard</h1>
-      <Tabs defaultValue={financeData.tabs[0].title.toLowerCase()} className="w-full">
+      <Tabs defaultValue={tabs[0].title.toLowerCase()} className="w-full">
         <TabsList>
-          {financeData.tabs.map((tab) => (
-            <TabsTrigger key={tab.title} value={tab.title.toLowerCase()}>
+          {tabs.map((tab) => (
+            <TabsTrigger key={tab.id} value={tab.title.toLowerCase()}>
               {tab.title}
             </TabsTrigger>
           ))}
         </TabsList>
 
         <TabsContent value="overview">
-          <FinanceOverview />
+          <FinanceOverview accounts={updatedAccounts} setAccounts={setAccounts} expenses={expenses} income={income} debts={debts}/>
         </TabsContent>
 
         {/* <TabsContent value="charts">
@@ -32,11 +54,11 @@ const FinancePage = () => {
         </TabsContent> */}
 
         <TabsContent value="expenses">
-          <ExpensePage/>
+          <ExpensePage accounts={updatedAccounts} expenses={expenses} setExpenses={setExpenses}/>
         </TabsContent>
 
         <TabsContent value="income">
-          <IncomePage/>
+          <IncomePage accounts={updatedAccounts} expenses={expenses} income={income} setIncome={setIncome}/>
         </TabsContent>
       </Tabs>
     </div>

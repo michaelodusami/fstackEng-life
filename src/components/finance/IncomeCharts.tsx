@@ -1,5 +1,6 @@
 'use client';
 
+import { Account, Income } from '@/lib/data/finance';
 import React, { useState } from 'react';
 import {
   LineChart,
@@ -15,12 +16,15 @@ import {
   Pie,
   Cell,
 } from 'recharts';
-import financeData from '@/lib/data/finance';
+
+interface Props {
+  accounts: Account[]
+  income: Income[],
+}
 
 const COLORS = ['#4CAF50', '#FFC107', '#2196F3', '#F44336', '#9C27B0', '#00BCD4'];
 
-const IncomeCharts: React.FC = () => {
-  const { accounts, income } = financeData;
+const IncomeCharts: React.FC<Props> = ({accounts, income}) => {
 
   // Total income per account
   const accountIncome = accounts.map((account) => {

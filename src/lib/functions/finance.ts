@@ -1,8 +1,8 @@
-import financeData from "../data/finance";
+import { Account, Expense, Income } from "../data/finance";
 
 
-export const getAccountNameById = (accountId: string): string => {
-    const account = financeData.accounts.find((acc) => acc.id === accountId);
+export const getAccountNameById = (accounts: Account[], accountId: string): string => {
+    const account = accounts.find((acc) => acc.id === accountId);
     return account ? account.title : 'Unknown Account';
   };
 
@@ -18,21 +18,21 @@ export const getAccountNameById = (accountId: string): string => {
   /**
    * Calculates the remaining balance for a given account.
    */
-export const calculateRemainingBalance = (accountId: string): number => {
-  const account = financeData.accounts.find((acc) => acc.id === accountId);
-  const accountExpenses = financeData.expenses.filter((expense) => expense.account_id === accountId);
-  const accountIncome = financeData.income.filter((income) => income.account_id === accountId);
-
-  if (!account) {
-    return 0;
-  }
-
-  const totalExpenses = accountExpenses.reduce((sum, expense) => sum + expense.amount, 0);
-  const totalIncome = accountIncome.reduce((sum, income) => sum + income.amount, 0);
-
-  return account.startingAmount + totalIncome - totalExpenses;
-};
-
+  export const calculateRemainingBalance = (accounts: Account[], expenses: Expense[], income: Income[], accountId: string): number => {
+    const account = accounts.find((acc) => acc.id === accountId);
+    if (!account) return 0;
+  
+    const totalIncome = income
+      .filter((income) => income.account_id === accountId)
+      .reduce((sum, income) => sum + income.amount, 0);
+  
+    const totalExpenses = expenses
+      .filter((expense) => expense.account_id === accountId)
+      .reduce((sum, expense) => sum + expense.amount, 0);
+  
+    return account.amount + totalIncome - totalExpenses;
+  };
+  
   
   /**
    * Calculates the total amount for a list of items.
@@ -50,4 +50,13 @@ export const calculateRemainingBalance = (accountId: string): number => {
     return totalAssets - totalDebts;
   };
 
+  export const calculatePercentageChange = (
+    previousBalance: number,
+    currentBalance: number
+  ): number => {
+    if (previousBalance === 0) {
+      return 0
+    }
+    return ((currentBalance - previousBalance) / previousBalance) * 100;
+  };
   

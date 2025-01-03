@@ -16,13 +16,18 @@ import {
   Cell,
 } from 'recharts';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import financeData from '@/lib/data/finance';
+import { Account, Expense } from '@/lib/data/finance';
 import { getAccountNameById } from '@/lib/functions/finance';
 
 const COLORS = ['#4CAF50', '#FFC107', '#2196F3', '#F44336', '#9C27B0', '#00BCD4'];
 
-const ExpenseCharts: React.FC = () => {
-  const { accounts, expenses } = financeData;
+interface Props {
+  accounts: Account[]
+  expenses: Expense[],
+}
+
+const ExpenseCharts: React.FC<Props> = ({accounts, expenses}) => {
+
 
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -67,7 +72,7 @@ const ExpenseCharts: React.FC = () => {
       .filter((expense) => expense.date === date)
       .map((expense) => ({
         ...expense,
-        accountName: getAccountNameById(expense.account_id),
+        accountName: getAccountNameById(accounts, expense.account_id),
       }));
   };
 
