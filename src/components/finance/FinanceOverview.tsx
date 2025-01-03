@@ -7,6 +7,46 @@ import { calculateRemainingBalance, calculateNetWorth, calculateTotals, formatCu
 import AccountBalancesChart from '@/components/finance/AccountBalancesChart';
 import { cn } from '@/lib/utils';
 
+
+const AccountsOverview: React.FC<{ remainingBalances: Array<{ id: string; title: string; remainingBalance: number; percentageChange: number }> }> = ({ remainingBalances }) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {remainingBalances.map(({ id, title, remainingBalance, percentageChange }) => {
+        const startingAmount = formatCurrency(financeData.accounts.find((acc) => acc.id === id)?.startingAmount || 0);
+        return (
+          <Card key={id} className="shadow-lg">
+            <CardHeader>
+              <CardTitle>{title}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div>
+                <span className="text-muted-foreground text-sm">Starting Amount:</span>
+                <span className="block font-semibold">{startingAmount}</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground text-sm">Remaining Balance:</span>
+                <span className="block font-semibold">{formatCurrency(remainingBalance)}</span>
+              </div>
+              <div>
+                <span
+                  className={cn(
+                    'text-sm font-medium',
+                    percentageChange > 0 ? 'text-green-600' : percentageChange < 0 ? 'text-red-600' : 'text-gray-500'
+                  )}
+                >
+                  {percentageChange.toFixed(2)}% {percentageChange > 0 ? 'Gain' : 'Loss'}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      })}
+    </div>
+  );
+};
+
+
+
 const FinanceOverview: React.FC = () => {
   const [accounts, setAccounts] = useState(financeData.accounts);
   const [remainingBalances, setRemainingBalances] = useState<RemainingBalance[]>([]);
@@ -36,31 +76,7 @@ const FinanceOverview: React.FC = () => {
           <CardTitle>Accounts</CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-4">
-            {remainingBalances.map(({ id, title, remainingBalance, percentageChange }) => (
-              <li key={id} className="flex justify-between items-center">
-                <div>
-                  <span className="block font-semibold">{title}</span>
-                  <span className="text-muted-foreground text-sm">
-                    Starting Amount: {formatCurrency(financeData.accounts.find((acc) => acc.id === id)?.startingAmount || 0)}
-                  </span>
-                </div>
-                <div className="text-right">
-                  <span className="block font-semibold">
-                    Remaining Balance: {formatCurrency(remainingBalance)}
-                  </span>
-                  <span
-                    className={cn(
-                      'text-sm font-medium',
-                      percentageChange > 0 ? 'text-green-600' : percentageChange < 0 ? 'text-red-600' : 'text-gray-500'
-                    )}
-                  >
-                    {percentageChange.toFixed(2)}% {percentageChange > 0 ? 'Gain' : 'Loss'}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <AccountsOverview remainingBalances={remainingBalances}/>
         </CardContent>
       </Card>
 
