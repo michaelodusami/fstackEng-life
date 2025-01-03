@@ -42,9 +42,8 @@ export interface Tab {
   const financeData: FinanceData = {
     tabs: [
       { id: "1", title: "Overview" },
-      { id: "2", title: "Charts" },
-      { id: "3", title: "Expenses" },
-      { id: "4", title: "Income" },
+      { id: "2", title: "Expenses" },
+      { id: "3", title: "Income" },
     ],
     accounts: [
       { id: "a1", title: "Schwab", startingAmount: 100, amount: 100 },

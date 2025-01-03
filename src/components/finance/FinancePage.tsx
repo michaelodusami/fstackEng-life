@@ -4,6 +4,7 @@ import FinanceOverview from '@/components/finance/FinanceOverview';
 import financeData from '@/lib/data/finance';
 import ExpenseTable from '@/components/finance/ExpenseTable';
 import ExpenseCharts from '@/components/finance/ExpenseCharts';
+import ExpensePage from './ExpensesPage';
 
 const FinancePage = () => {
   return (
@@ -22,30 +23,15 @@ const FinancePage = () => {
           <FinanceOverview />
         </TabsContent>
 
-        <TabsContent value="charts">
+        {/* <TabsContent value="charts">
           <div className="p-4 bg-gray-50 rounded-lg shadow">
             <h2 className="text-xl font-semibold mb-4">Charts</h2>
             <p>Placeholder for charts and visualizations.</p>
           </div>
-        </TabsContent>
+        </TabsContent> */}
 
         <TabsContent value="expenses">
-          <div className="p-4 bg-gray-50 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Expenses</h2>
-            <Tabs defaultValue="charts" className="w-full">
-              <TabsList className="flex justify-center mb-4">
-                <TabsTrigger value="charts">Charts</TabsTrigger>
-                <TabsTrigger value="tables">Tables</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="charts">
-                <ExpenseCharts />
-              </TabsContent>
-              <TabsContent value="tables">
-                <ExpenseTable />
-              </TabsContent>
-            </Tabs>
-          </div>
+          <ExpensePage/>
         </TabsContent>
 
         <TabsContent value="income">
