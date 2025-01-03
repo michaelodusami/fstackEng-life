@@ -5,6 +5,7 @@ import financeData from '@/lib/data/finance';
 import ExpenseTable from '@/components/finance/ExpenseTable';
 import ExpenseCharts from '@/components/finance/ExpenseCharts';
 import ExpensePage from './ExpensesPage';
+import IncomePage from './IncomePage';
 
 const FinancePage = () => {
   return (
@@ -35,10 +36,7 @@ const FinancePage = () => {
         </TabsContent>
 
         <TabsContent value="income">
-          <div className="p-4 bg-gray-50 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Income</h2>
-            <p>Placeholder for income details.</p>
-          </div>
+          <IncomePage/>
         </TabsContent>
       </Tabs>
     </div>

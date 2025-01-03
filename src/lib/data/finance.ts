@@ -25,6 +25,15 @@ export interface Tab {
     date: string; // New: ISO format date string
   }
   
+  export interface Income {
+    id: string;
+    account_id: string;
+    title: string;
+    category: string;
+    amount: number;
+    date: string; // New: ISO format date string
+  }
+  
   export interface RemainingBalance {
     id: string;
     title: string;
@@ -37,6 +46,7 @@ export interface Tab {
     accounts: Account[];
     debts: Debt[];
     expenses: Expense[];
+    income: Income[]; // New: Income records
   }
   
   const financeData: FinanceData = {
@@ -58,10 +68,15 @@ export interface Tab {
       { id: "d2", title: "Loan", amount: 200 },
     ],
     expenses: [
-        { id: "e1", account_id: "a1", title: "Grocery Shopping", category: "Groceries", amount: 50, date: "2025-01-01" },
-        { id: "e2", account_id: "a2", title: "Electric Bill", category: "Utilities", amount: 30, date: "2025-01-02" },
-        { id: "e3", account_id: "a3", title: "Dining Out", category: "Food & Drink", amount: 20, date: "2025-01-03" },
-      ],
+      { id: "e1", account_id: "a1", title: "Grocery Shopping", category: "Groceries", amount: 50, date: "2025-01-01" },
+      { id: "e2", account_id: "a2", title: "Electric Bill", category: "Utilities", amount: 30, date: "2025-01-02" },
+      { id: "e3", account_id: "a3", title: "Dining Out", category: "Food & Drink", amount: 20, date: "2025-01-03" },
+    ],
+    income: [
+      { id: "i1", account_id: "a1", title: "Salary", category: "Work", amount: 5000, date: "2025-01-01" },
+      { id: "i2", account_id: "a2", title: "Freelance Project", category: "Side Hustle", amount: 200, date: "2025-01-02" },
+      { id: "i3", account_id: "a3", title: "Dividends", category: "Investments", amount: 50, date: "2025-01-03" },
+    ],
   };
   
   export default financeData;

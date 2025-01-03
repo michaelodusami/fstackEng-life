@@ -18,17 +18,21 @@ export const getAccountNameById = (accountId: string): string => {
   /**
    * Calculates the remaining balance for a given account.
    */
-  export const calculateRemainingBalance = (accountId: string): number => {
-    const account = financeData.accounts.find((acc) => acc.id === accountId);
-    const accountExpenses = financeData.expenses.filter((expense) => expense.account_id === accountId);
-  
-    if (!account) {
-      return 0;
-    }
-  
-    const totalExpenses = accountExpenses.reduce((sum, expense) => sum + expense.amount, 0);
-    return account.startingAmount - totalExpenses;
-  };
+export const calculateRemainingBalance = (accountId: string): number => {
+  const account = financeData.accounts.find((acc) => acc.id === accountId);
+  const accountExpenses = financeData.expenses.filter((expense) => expense.account_id === accountId);
+  const accountIncome = financeData.income.filter((income) => income.account_id === accountId);
+
+  if (!account) {
+    return 0;
+  }
+
+  const totalExpenses = accountExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+  const totalIncome = accountIncome.reduce((sum, income) => sum + income.amount, 0);
+
+  return account.startingAmount + totalIncome - totalExpenses;
+};
+
   
   /**
    * Calculates the total amount for a list of items.
