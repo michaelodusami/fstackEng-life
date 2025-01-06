@@ -12,10 +12,11 @@ import {
 } from '@/lib/functions/finance';
 import AccountBalancesChart from '@/components/finance/AccountBalancesChart';
 import AccountsOverview from './AccountsOverview';
+import useFinance from '@/hooks/useFinance';
 
-const FinanceOverview: React.FC<{accounts: Account[], setAccounts: any, expenses: Expense[], income: Income[], debts: Debt[]}> = ({accounts, setAccounts, expenses, income, debts}) => {
+function FinanceOverview() {
 
-
+  const {accounts, debts} = useFinance()
 
   const netWorth = calculateNetWorth(accounts, debts);
   const totalAssets = calculateTotals(accounts);
@@ -31,7 +32,7 @@ const FinanceOverview: React.FC<{accounts: Account[], setAccounts: any, expenses
           <CardTitle>Accounts</CardTitle>
         </CardHeader>
         <CardContent>
-          <AccountsOverview accounts={accounts} expenses={expenses} income={income} />
+          <AccountsOverview />
         </CardContent>
       </Card>
 

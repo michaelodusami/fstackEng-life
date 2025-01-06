@@ -2,33 +2,38 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import FinanceOverview from '@/components/finance/FinanceOverview';
-import financeData from '@/lib/data/finance';
-import ExpenseTable from '@/components/finance/ExpenseTable';
-import ExpenseCharts from '@/components/finance/ExpenseCharts';
+import financeData, { Account } from '@/lib/data/finance';
+import ExpenseTable from '@/components/finance/ExpensesTable';
+import ExpenseCharts from '@/components/finance/ExpensesCharts';
 import ExpensePage from './ExpensesPage';
 import IncomePage from './IncomePage';
 import {tabs} from "@/lib/data/finance"
-import { calculateRemainingBalance, calculatePercentageChange } from '@/lib/functions/finance';
+import { calculateRemainingBalance, calculatePercentageChange, getAccountNameById } from '@/lib/functions/finance';
 
 const FinancePage = () => {
 
-  const [accounts, setAccounts] = useState(financeData.accounts);
-  const [expenses, setExpenses] = useState(financeData.expenses)
-  const [income, setIncome] = useState(financeData.income)
-  const [debts, setDebts] = useState(financeData.debts)
+  // const [accounts, setAccounts] = useState(financeData.accounts);
+  // const [expenses, setExpenses] = useState(financeData.expenses)
+  // const [income, setIncome] = useState(financeData.income)
+  // const [debts, setDebts] = useState(financeData.debts)
 
-  const updatedAccounts = useMemo(() => {
-    return accounts.map((account) => {
-      const currentBalance = calculateRemainingBalance(accounts, expenses, income, account.id);
-      
+  // useEffect(() => {
+  //   setAccounts(() =>
+  //     accounts.map((account) => {
+  //       // just add the recently added income and expense
+  //       const currentBalance = calculateRemainingBalance(accounts, expenses, income, account.id);
 
-      return {
-        ...account,
-        amount: currentBalance,
-        previousBalance: account.amount
-      };
-    });
-  }, [accounts, expenses, income]);
+  //       return {
+  //         ...account,
+  //         amount: currentBalance,
+  //         previousAmount: account.amount
+  //       };
+  //     })
+  //   );
+  //   console.log("Running Account")
+  // }, [expenses, income]);
+
+
 
   return (
     <div className="p-6">
@@ -43,7 +48,7 @@ const FinancePage = () => {
         </TabsList>
 
         <TabsContent value="overview">
-          <FinanceOverview accounts={updatedAccounts} setAccounts={setAccounts} expenses={expenses} income={income} debts={debts}/>
+          <FinanceOverview/>
         </TabsContent>
 
         {/* <TabsContent value="charts">
@@ -54,12 +59,12 @@ const FinancePage = () => {
         </TabsContent> */}
 
         <TabsContent value="expenses">
-          <ExpensePage accounts={updatedAccounts} expenses={expenses} setExpenses={setExpenses}/>
+          <ExpensePage/>
         </TabsContent>
 
         <TabsContent value="income">
-          <IncomePage accounts={updatedAccounts} expenses={expenses} income={income} setIncome={setIncome}/>
-        </TabsContent>
+          <IncomePage/>
+        </TabsContent> 
       </Tabs>
     </div>
   );

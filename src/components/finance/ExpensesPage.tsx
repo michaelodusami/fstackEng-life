@@ -2,22 +2,15 @@
 
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import ExpenseCharts from '@/components/finance/ExpenseCharts';
-import ExpenseTable from '@/components/finance/ExpenseTable';
+import ExpenseCharts from '@/components/finance/ExpensesCharts';
+import ExpenseTable from '@/components/finance/ExpensesTable';
 import financeData, { Account, Expense, predefinedCategories } from '@/lib/data/finance';
+import useFinance from '@/hooks/useFinance';
 
 
+function ExpensePage() {
+  const {accounts, withdraw, expenses} = useFinance()
 
-
-interface Props {
-  accounts: Account[]
-  expenses: Expense[],
-  setExpenses: any
-}
-
-
-
-const ExpensePage: React.FC<Props> = ({accounts, expenses, setExpenses}) => {
   const [newExpense, setNewExpense] = useState({
     title: '',
     category: predefinedCategories[0],
@@ -39,9 +32,6 @@ const ExpensePage: React.FC<Props> = ({accounts, expenses, setExpenses}) => {
       date: new Date().toISOString().split('T')[0], // Add current date
     };
 
-    // Add the expense to the financeData
-    setExpenses([...expenses, expense])
-
     // Reset form
     setNewExpense({
       title: '',
@@ -51,6 +41,9 @@ const ExpensePage: React.FC<Props> = ({accounts, expenses, setExpenses}) => {
     });
 
     console.log('Expense Added:', expense);
+
+    // Add the expense to the financeData
+    withdraw(expense)
   };
 
   return (

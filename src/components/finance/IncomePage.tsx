@@ -6,16 +6,13 @@ import financeData, { Account, Expense, Income, predefinedCategories } from '@/l
 import { formatCurrency } from '@/lib/functions/finance';
 import IncomeCharts from './IncomeCharts';
 import IncomeTable from './IncomeTable';
-
-interface Props {
-  accounts: Account[]
-  expenses: Expense[],
-  income: Income[],
-  setIncome: any
-}
+import useFinance from '@/hooks/useFinance';
 
 
-const IncomePage: React.FC<Props> = ({accounts, expenses, income, setIncome}) => {
+function IncomePage(){
+
+  const {accounts, deposit, income} = useFinance()
+
   const [formIncome, setNewIncome] = useState({
     title: '',
     category: predefinedCategories[0],
@@ -39,9 +36,6 @@ const IncomePage: React.FC<Props> = ({accounts, expenses, income, setIncome}) =>
       date: new Date().toISOString().split('T')[0], // Add current date
     };
 
-    // Add the income to the financeData
-    setIncome([...income, newIncome])
-
     // Reset form
     setNewIncome({
       title: '',
@@ -51,6 +45,9 @@ const IncomePage: React.FC<Props> = ({accounts, expenses, income, setIncome}) =>
     });
 
     console.log('Income Added:', newIncome);
+
+    // Add the income to the financeData
+    deposit(newIncome);
   };
 
   return (

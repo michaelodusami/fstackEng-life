@@ -1,3 +1,6 @@
+import React from "react";
+import { inherits } from "util";
+
 export interface Tab {
     id: string;
     title: string;
@@ -13,10 +16,10 @@ export interface Tab {
   export interface Account {
     id: string;
     title: string;
-    amount: number; // Current balance of the account
-    previousBalance: number; // Balance from the previous period, initially 0
+    amount: number; 
+    percentageChange: number;
   }
-  
+
   export interface Debt {
     id: string;
     title: string;
@@ -41,12 +44,12 @@ export interface Tab {
     date: string; // New: ISO format date string
   }
   
-  export interface RemainingBalance {
-    id: string;
-    title: string;
-    remainingBalance: number;
-    percentageChange: number;
-  }
+  // export interface RemainingBalance {
+  //   id: string;
+  //   title: string;
+  //   remainingBalance: number;
+  //   percentageChange: number;
+  // }
   
   export interface FinanceData {
     accounts: Account[];
@@ -55,17 +58,19 @@ export interface Tab {
     income: Income[]; // New: Income records
   }
 
+
+
   export const predefinedCategories = ['Groceries', 'Utilities', 'Food & Drink', 'Transport', 'Entertainment', 'Healthcare', 'Work', 'Side Hustle', 'Investments', 'Other'];
 
   
   const financeData: FinanceData = {
     accounts: [
-      { id: "a1", title: "Schwab", amount: 100, previousBalance: 100 },
-      { id: "a2", title: "Ally Checking", amount: 100, previousBalance: 100 },
-      { id: "a3", title: "Ally Savings", amount: 100, previousBalance: 100 },
-      { id: "a4", title: "Fidelity", amount: 100, previousBalance: 100 },
-      { id: "a5", title: "Coinbase", amount: 100, previousBalance: 100 },
-      { id: "a6", title: "Roth", amount: 100, previousBalance: 100 },
+      { id: "a1", title: "Schwab", amount: 100, percentageChange: 0 },
+      { id: "a2", title: "Ally Checking", amount: 100, percentageChange: 0},
+      { id: "a3", title: "Ally Savings", amount: 100, percentageChange: 0},
+      { id: "a4", title: "Fidelity", amount: 100, percentageChange: 0},
+      { id: "a5", title: "Coinbase", amount: 100, percentageChange: 0},
+      { id: "a6", title: "Roth", amount: 100, percentageChange: 0}
     ],
     debts: [
       // { id: "d1", title: "Credit Card", amount: 50 },

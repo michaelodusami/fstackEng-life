@@ -15,6 +15,7 @@ export const getAccountNameById = (accounts: Account[], accountId: string): stri
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   };
   
+  
   /**
    * Calculates the remaining balance for a given account.
    */
@@ -30,8 +31,6 @@ export const getAccountNameById = (accounts: Account[], accountId: string): stri
       .filter((expense) => expense.account_id === accountId)
       .reduce((sum, expense) => sum + expense.amount, 0);
 
-    
-    console.log("Printing Amount: " + account.amount)
   
     return account.amount + totalIncome - totalExpenses;
   };
@@ -57,10 +56,8 @@ export const getAccountNameById = (accounts: Account[], accountId: string): stri
     previousBalance: number,
     currentBalance: number
   ): number => {
-    console.log(previousBalance + " <-> " + currentBalance)
-    if (previousBalance === 0) {
-      return 0
-    }
-    return ((currentBalance - previousBalance) / previousBalance) * 100;
+    const change = ((currentBalance - previousBalance) / previousBalance) * 100;
+    if (change === Infinity) return 0;
+    return change
   };
   

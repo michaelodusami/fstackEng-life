@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import NavigationBar from "@/components/nav/NavigationBar";
 import "./globals.css";
+import { FinanceProvider } from "@/providers/FinanceProvider";
 
 // Font configurations
 const geistSans = Geist({
@@ -37,7 +38,9 @@ export default function RootLayout({
       >
         <NavigationBar />
         <div id="body-container-layout" className="px-3 py-2 w-[100%] mx-auto">
-        {children}
+          <FinanceProvider>
+              {children}
+          </FinanceProvider>
         </div>
       
       </body>

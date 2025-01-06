@@ -3,20 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { calculateRemainingBalance, calculatePercentageChange, formatCurrency } from '@/lib/functions/finance';
 import { cn } from '@/lib/utils';
 import { Account, Expense, Income } from '@/lib/data/finance';
+import useFinance from '@/hooks/useFinance';
 
 interface Props {
   accounts: Account[]
-  expenses: Expense[],
-  income: Income[]
 }
 
 
-const AccountsOverview: React.FC<Props> = ({ accounts, expenses, income }) => {
+function AccountsOverview() {
+  const { accounts } = useFinance()
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {accounts.map(({ id, title, amount, previousBalance }) => {
-        const percentageChange = calculatePercentageChange(previousBalance, amount);
-
+      {accounts.map(({ id, title, amount, percentageChange}) => {
+        
         return (
           <Card key={id} className="shadow-lg">
             <CardHeader>
