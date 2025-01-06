@@ -36,7 +36,7 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-inter)" }}
       >
         <NavigationBar />
-        <div id="body-container-layout" className="px-3 py-2 w-[80%] mx-auto">
+        <div id="body-container-layout" className="px-3 py-2 w-[100%] mx-auto">
         {children}
         </div>
       

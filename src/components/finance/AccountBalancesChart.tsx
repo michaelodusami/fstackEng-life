@@ -16,7 +16,7 @@ interface Props {
 const AccountBalancesChart: React.FC<Props> = ({ remainingBalances }) => {
   return (
     <div className="p-4 bg-card rounded-lg shadow">
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={400}>
         <BarChart data={remainingBalances}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="title" />
