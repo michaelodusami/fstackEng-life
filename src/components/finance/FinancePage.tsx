@@ -20,12 +20,12 @@ const FinancePage = () => {
   const updatedAccounts = useMemo(() => {
     return accounts.map((account) => {
       const currentBalance = calculateRemainingBalance(accounts, expenses, income, account.id);
-      const percentageChange = calculatePercentageChange(account.amount, currentBalance);
+      
 
       return {
         ...account,
         amount: currentBalance,
-        percentageChange,
+        previousBalance: account.amount
       };
     });
   }, [accounts, expenses, income]);
