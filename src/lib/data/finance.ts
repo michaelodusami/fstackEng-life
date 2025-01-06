@@ -14,7 +14,7 @@ export interface Tab {
     id: string;
     title: string;
     amount: number; // Current balance of the account
-    previousBalance: number; // Balance from the previous period, initially 0
+    percentageChange: number
   }
   
   export interface Debt {
@@ -60,12 +60,12 @@ export interface Tab {
   
   const financeData: FinanceData = {
     accounts: [
-      { id: "a1", title: "Schwab", amount: 100, previousBalance: 0 },
-      { id: "a2", title: "Ally Checking", amount: 100, previousBalance: 0 },
-      { id: "a3", title: "Ally Savings", amount: 100, previousBalance: 0 },
-      { id: "a4", title: "Fidelity", amount: 100, previousBalance: 0 },
-      { id: "a5", title: "Coinbase", amount: 100, previousBalance: 0 },
-      { id: "a6", title: "Roth", amount: 100, previousBalance: 0 },
+      { id: "a1", title: "Schwab", amount: 100, percentageChange: 0 },
+      { id: "a2", title: "Ally Checking", amount: 100, percentageChange: 0 },
+      { id: "a3", title: "Ally Savings", amount: 100, percentageChange: 0 },
+      { id: "a4", title: "Fidelity", amount: 100, percentageChange: 0 },
+      { id: "a5", title: "Coinbase", amount: 100, percentageChange: 0 },
+      { id: "a6", title: "Roth", amount: 100, percentageChange: 0 },
     ],
     debts: [
       // { id: "d1", title: "Credit Card", amount: 50 },

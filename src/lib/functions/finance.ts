@@ -29,6 +29,9 @@ export const getAccountNameById = (accounts: Account[], accountId: string): stri
     const totalExpenses = expenses
       .filter((expense) => expense.account_id === accountId)
       .reduce((sum, expense) => sum + expense.amount, 0);
+
+    
+    console.log("Printing Amount: " + account.amount)
   
     return account.amount + totalIncome - totalExpenses;
   };
@@ -54,6 +57,7 @@ export const getAccountNameById = (accounts: Account[], accountId: string): stri
     previousBalance: number,
     currentBalance: number
   ): number => {
+    console.log(previousBalance + " <-> " + currentBalance)
     if (previousBalance === 0) {
       return 0
     }

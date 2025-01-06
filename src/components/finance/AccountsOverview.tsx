@@ -14,9 +14,8 @@ interface Props {
 const AccountsOverview: React.FC<Props> = ({ accounts, expenses, income }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {accounts.map(({ id, title, amount, previousBalance }) => {
-        const remainingBalance = calculateRemainingBalance(accounts, expenses, income, id);
-        const percentageChange = calculatePercentageChange(previousBalance, remainingBalance);
+      {accounts.map(({ id, title, amount, percentageChange }) => {
+        console.log(`Amount for ${title} is ${amount}`)
 
         return (
           <Card key={id} className="shadow-lg">
@@ -24,10 +23,10 @@ const AccountsOverview: React.FC<Props> = ({ accounts, expenses, income }) => {
               <CardTitle>{title}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <div>
+              {/* <div>
                 <span className="text-muted-foreground text-sm">Previous Balance:</span>
-                <span className="block font-semibold">{formatCurrency(previousBalance)}</span>
-              </div>
+                <span className="block font-semibold">{formatCurrency(amount)}</span>
+              </div> */}
               <div>
                 <span className="text-muted-foreground text-sm">Current Balance:</span>
                 <span className="block font-semibold">{formatCurrency(amount)}</span>
